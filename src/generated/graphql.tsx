@@ -10,6 +10,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type Query = {
@@ -22,22 +24,23 @@ export type Query = {
 
 
 export type QueryPostArgs = {
-  id: Scalars['Float'];
+  id: Scalars['ID'];
 };
 
 export type Post = {
   __typename?: 'Post';
-  id: Scalars['Float'];
-  createdAt: Scalars['String'];
-  updatedAt: Scalars['String'];
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
   title: Scalars['String'];
 };
 
+
 export type User = {
   __typename?: 'User';
-  id: Scalars['Float'];
-  createdAt: Scalars['String'];
-  updatedAt: Scalars['String'];
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
   userName: Scalars['String'];
 };
 
@@ -58,12 +61,12 @@ export type MutationCreatePostArgs = {
 
 export type MutationUpdatePostArgs = {
   title?: Maybe<Scalars['String']>;
-  id: Scalars['Float'];
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeletePostArgs = {
-  id: Scalars['Float'];
+  id: Scalars['ID'];
 };
 
 
@@ -93,9 +96,27 @@ export type UserNamePasswordInput = {
   password: Scalars['String'];
 };
 
+export type LoginMutationVariables = Exact<{
+  options: UserNamePasswordInput;
+}>;
+
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: (
+    { __typename?: 'UserResponse' }
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'field' | 'message'>
+    )>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'createdAt' | 'updatedAt' | 'userName'>
+    )> }
+  ) }
+);
+
 export type RegisterMutationVariables = Exact<{
-  userName: Scalars['String'];
-  password: Scalars['String'];
+  options: UserNamePasswordInput;
 }>;
 
 
@@ -113,10 +134,41 @@ export type RegisterMutation = (
   ) }
 );
 
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'userName'>
+  )> }
+);
+
+
+export const LoginDocument = gql`
+    mutation Login($options: UserNamePasswordInput!) {
+  login(options: $options) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      createdAt
+      updatedAt
+      userName
+    }
+  }
+}
+    `;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
 export const RegisterDocument = gql`
-    mutation Register($userName: String!, $password: String!) {
-  register(options: {userName: $userName, password: $password}) {
+    mutation Register($options: UserNamePasswordInput!) {
+  register(options: $options) {
     errors {
       field
       message
@@ -133,4 +185,16 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    userName
+  }
+}
+    `;
+
+export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };
