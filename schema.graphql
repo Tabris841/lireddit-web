@@ -12,30 +12,31 @@ type FieldError {
 
 type Mutation {
     createPost(title: String!): Post!
-    deletePost(id: Float!): Boolean!
+    deletePost(id: ID!): Boolean!
     login(options: UserNamePasswordInput!): UserResponse!
+    logout: Boolean!
     register(options: UserNamePasswordInput!): UserResponse!
-    updatePost(id: Float!, title: String): Post
+    updatePost(id: ID!, title: String): Post
 }
 
 type Post {
-    createdAt: String!
-    id: Float!
+    createdAt: DateTime!
+    id: ID!
     title: String!
-    updatedAt: String!
+    updatedAt: DateTime!
 }
 
 type Query {
     hello: String!
     me: User
-    post(id: Float!): Post
+    post(id: ID!): Post
     posts: [Post!]!
 }
 
 type User {
-    createdAt: String!
-    id: Float!
-    updatedAt: String!
+    createdAt: DateTime!
+    id: ID!
+    updatedAt: DateTime!
     userName: String!
 }
 
@@ -48,3 +49,7 @@ input UserNamePasswordInput {
     password: String!
     userName: String!
 }
+
+
+"The javascript `Date` as string. Type represents date and time as the ISO Date string."
+scalar DateTime
