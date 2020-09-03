@@ -8,7 +8,7 @@ import { InputField } from '../components/InputField';
 import { createUrqlClient } from '../utils/createUrqlClient';
 import { useForgotPasswordMutation } from '../generated/graphql';
 
-const ForgotAssword: React.FC<{}> = ({}) => {
+const ForgotPassword: React.FC<{}> = ({}) => {
   const [complete, setComplete] = useState(false);
   const [, forgotPassword] = useForgotPasswordMutation();
 
@@ -51,4 +51,4 @@ const ForgotAssword: React.FC<{}> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(ForgotAssword);
+export default withUrqlClient(createUrqlClient)(ForgotPassword);
