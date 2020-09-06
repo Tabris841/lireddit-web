@@ -22,20 +22,20 @@ type Mutation {
 }
 
 type Post {
-    createdAt: DateTime!
+    createdAt: String!
     creatorId: Float!
     id: ID!
     points: Float!
     text: String!
     title: String!
-    updatedAt: DateTime!
+    updatedAt: String!
 }
 
 type Query {
     hello: String!
     me: User
     post(id: ID!): Post
-    posts: [Post!]!
+    posts(cursor: String, limit: Int!): [Post!]!
 }
 
 type User {

@@ -4,12 +4,12 @@ import { Form, Formik } from 'formik';
 import { Box, Button, Flex, Link } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+import { withUrqlClient } from 'next-urql';
 
 import { Wrapper } from '../../components/Wrapper';
 import { toErrorMap } from '../../utils/toErrorMap';
 import { InputField } from '../../components/InputField';
 import { useChangePasswordMutation } from '../../generated/graphql';
-import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '../../utils/createUrqlClient';
 
 export const ChangePassword: NextPage = () => {
