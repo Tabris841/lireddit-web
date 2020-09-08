@@ -27,6 +27,7 @@ type Post {
     id: ID!
     points: Float!
     text: String!
+    textSnippet: String!
     title: String!
     updatedAt: String!
 }
@@ -39,10 +40,10 @@ type Query {
 }
 
 type User {
-    createdAt: DateTime!
+    createdAt: String!
     email: String!
     id: ID!
-    updatedAt: DateTime!
+    updatedAt: String!
     userName: String!
 }
 
@@ -61,7 +62,3 @@ input UserNamePasswordInput {
     password: String!
     userName: String!
 }
-
-
-"The javascript `Date` as string. Type represents date and time as the ISO Date string."
-scalar DateTime
