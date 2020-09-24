@@ -1,4 +1,4 @@
-query Posts($limit: Int!, $cursor: String){
+query Posts($limit: Int!, $cursor: String) {
   posts(limit: $limit, cursor: $cursor) {
     hasMore
     posts {
@@ -7,6 +7,10 @@ query Posts($limit: Int!, $cursor: String){
       updatedAt
       title
       textSnippet
+      creator {
+        id
+        userName
+      }
     }
   }
 }
