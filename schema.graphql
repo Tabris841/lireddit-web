@@ -31,12 +31,13 @@ type Post {
     createdAt: String!
     creator: User!
     creatorId: Float!
-    id: ID!
+    id: Float!
     points: Float!
     text: String!
     textSnippet: String!
     title: String!
     updatedAt: String!
+    voteStatus: Int
 }
 
 type Query {
@@ -49,7 +50,7 @@ type Query {
 type User {
     createdAt: String!
     email: String!
-    id: ID!
+    id: Float!
     updatedAt: String!
     userName: String!
 }
