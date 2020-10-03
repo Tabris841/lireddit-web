@@ -18,7 +18,7 @@ type Mutation {
     login(password: String!, userNameOrEmail: String!): UserResponse!
     logout: Boolean!
     register(options: UserNamePasswordInput!): UserResponse!
-    updatePost(id: ID!, title: String): Post
+    updatePost(id: Int!, text: String!, title: String!): Post
     vote(postId: Int!, value: Int!): Boolean!
 }
 
